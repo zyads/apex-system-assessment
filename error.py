@@ -11,6 +11,10 @@ PLAYER = 'P'
 EXIT = 'E'
 ITEM = '*'
 
+# (FIX) Added constants for exit location
+EXIT_X = MAZE_WIDTH - 2
+EXIT_Y = MAZE_HEIGHT - 2
+
 # Function to initialize the maze
 def initialize_maze():
     maze = [[EMPTY] * MAZE_WIDTH for _ in range(MAZE_HEIGHT)]
@@ -23,8 +27,8 @@ def initialize_maze():
         maze[-1][j] = WALL
     # Place player
     maze[1][1] = PLAYER
-    # Place exit
-    maze[MAZE_HEIGHT - 2][MAZE_WIDTH - 2] = EXIT
+    # Place exit (FIX) using constants for exit location
+    maze[EXIT_Y][EXIT_X] = EXIT
     # Place items
     for _ in range(3):  # Adjust the number of items as needed
         while True:
@@ -80,7 +84,8 @@ def main():
             print("Cannot move there! Try another direction.")
         else:
             player_pos = find_player(maze)
-            if maze[player_pos[0]][player_pos[1]] == EXIT:
+            # (FIX) Check reached exit using constants for exit location
+            if (player_pos[0], player_pos[1]) == (EXIT_Y, EXIT_X):
                 print("Congratulations! You found the exit!")
                 break
 
